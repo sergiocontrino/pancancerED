@@ -62,6 +62,7 @@ var query    = {
     "symbol",
     "PanCancerExpressions.expressionLevel",
     "PanCancerExpressions.unit",
+    "PanCancerExpressions.experiment.tissueType",
     "PanCancerExpressions.experiment.tissue"
   ],
   "orderBy": [
@@ -73,10 +74,10 @@ var query    = {
       "path": type + ".PanCancerExpressions.experiment.tissue",
       "direction": "ASC"
     }
-    // ,{
-    //   "path": type + ".PanCancerExpressions.experiment.SRAaccession",
-    //   "direction": "ASC"
-    // }
+    ,{
+      "path": type + ".PanCancerExpressions.experiment.tissueType",
+      "direction": "ASC"
+    }
   ],
   "where": [
     {
@@ -193,6 +194,37 @@ if (mineUrl.includes("thalemine")) {
     .domain(d3.map(data, function(d){return d[5]}).keys())
     .range([0, 7*cellWidth, 9*cellWidth, 16*cellWidth, 40*cellWidth, 85*cellWidth, 87*cellWidth, 96*cellWidth, 103*cellWidth, 106*cellWidth, 110*cellWidth, sampleNr*cellWidth])
   ;
+} else if (mineUrl.includes("storm")) {
+//          tissue         | count
+// ------------------------+-------
+//  blood                  |     4
+//  brain                  |    15
+//  breast                 |     4
+//  esophagus              |     4
+//  kidney                 |     5
+
+//  large intestine        |     3
+//  liver                  |     5
+//  lung                   |     5
+//  mouth mucosa           |     3
+//  ovary                  |     2
+
+//  pancreas               |     2
+//  prostate gland         |     3
+//  skeletal muscle tissue |     2
+//  skin                   |     3
+//  stomach                |     3
+
+//  thyroid gland          |     3
+//  urinary bladder        |     3
+//  uterine cervix         |     4
+//  uterus                 |     3
+x = d3.scale.ordinal()
+  .domain(d3.map(data, function(d){return d[5]}).keys())
+  .range([0, 4*cellWidth, 19*cellWidth, 23*cellWidth, 27*cellWidth, 32*cellWidth,
+     35*cellWidth, 40*cellWidth, 45*cellWidth, 48*cellWidth, 50*cellWidth,
+     52*cellWidth, 55*cellWidth, 57*cellWidth, 60*cellWidth, 63*cellWidth,
+     66*cellWidth, 69*cellWidth, 73*cellWidth, sampleNr*cellWidth])
 } else {
 /* generic version with the sample id */
   x = d3.scale.ordinal()
