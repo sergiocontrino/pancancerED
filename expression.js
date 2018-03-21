@@ -63,7 +63,8 @@ var query    = {
     "PanCancerExpressions.expressionLevel",
     "PanCancerExpressions.unit",
     "PanCancerExpressions.experiment.tissueType",
-    "PanCancerExpressions.experiment.tissue"
+    "PanCancerExpressions.experiment.tissue",
+    "PanCancerExpressions.experiment.location"
   ],
   "orderBy": [
     {
@@ -76,6 +77,10 @@ var query    = {
     }
     ,{
       "path": type + ".PanCancerExpressions.experiment.tissueType",
+      "direction": "ASC"
+    }
+    ,{
+      "path": type + ".PanCancerExpressions.experiment.location",
       "direction": "ASC"
     }
   ],
@@ -165,8 +170,8 @@ console.log("s:" + sampleNr + " t:" + tissueNr + " g:" + geneNr + " x:" + xNr + 
 
   var color = d3.scale.linear()
     .domain([0, max])
-    //.range(["lightgray", "green"]);
-    .range(["palegreen", "red"]);
+    .range(["yellow", "blue"]);
+    //.range(["palegreen", "red"]);
 
   // Size our SVG tall enough so that it fits each bar.
   // Width was already defined when we loaded.
@@ -276,7 +281,8 @@ x = d3.scale.ordinal()
     .on("mouseover", function(d, i){
       d3.select(this)
         .attr({"xlink:href": mineUrl + EPORTAL + d[4]})
-        .attr({"xlink:title": d[0] + "[" + d[1] + "]" + " - " + d[4] + " (" + d[5] + "): " + d[2]});
+        .attr({"xlink:title": d[0] + "[" + d[1] + "]" + " - " + d[4] + " " + d[6] + " (" + d[5] + "): " + d[2]});
+        //.attr({"xlink:title": d[0] + "[" + d[1] + "]" + " - " + d[4] + " (" + d[5] + "): " + d[2]});
     })
     .append("rect")
     .attr("width", cellWidth)
@@ -346,7 +352,7 @@ x = d3.scale.ordinal()
   linearLegend = d3.scale.linear()
     .domain([0,maxE])
     //.range(["rgb(46, 73, 123)", "rgb(71, 187, 94)"]);
-    .range(["palegreen", "red"]);
+    .range(["yellow", "blue"]);
 
   svg.append("g")
     .attr("class", "legendLinear")
@@ -373,7 +379,7 @@ x = d3.scale.ordinal()
   // Explanatory text
    svg.append("text")
     .attr("class", "note1")
-    .attr("x", margin.left + 40*cellWidth)
+    .attr("x", margin.left + 2*cellWidth)
     .attr("y", barHeight*(geneNr + 1) + 2*margin.top)
     .style("font-size", 1.2*halfBar+"px")
     .style("fill", "gray")
