@@ -58,8 +58,8 @@ console.log(type + ": " + svgId + " " + mineUrl + " " + queryId + " (" + constra
 var query    = {
   "from": type,
   "select": [
-    "primaryIdentifier",
     "symbol",
+    "secondaryIdentifier",
     "PanCancerExpressions.expressionLevel",
     "PanCancerExpressions.unit",
     "PanCancerExpressions.experiment.tissueType",
@@ -68,7 +68,7 @@ var query    = {
   ],
   "orderBy": [
     {
-      "path": "primaryIdentifier",
+      "path": "symbol",
       "direction": "ASC"
     },
     {
@@ -180,10 +180,11 @@ console.log("s:" + sampleNr + " t:" + tissueNr + " g:" + geneNr + " x:" + xNr + 
 
   // Coerce data to the appropriate types. NOT USED
   data.forEach(function(d) {
-    d.sra = +d[4];
-    d.gene = +d[0];
+    //d.sra = +d[4];
+    //d.gene = +d[0];
     d.level = +d[2];
     d.tissue = +d[5];
+    if (d[6] == null) {d.loc = ""} else {d.loc = " " + d[6]};
   });
 
  // Compute the scale domains and set the ranges
@@ -281,8 +282,9 @@ x = d3.scale.ordinal()
     .on("mouseover", function(d, i){
       d3.select(this)
         .attr({"xlink:href": mineUrl + EPORTAL + d[4]})
-        .attr({"xlink:title": d[0] + "[" + d[1] + "]" + " - " + d[4] + " " + d[6] + " (" + d[5] + "): " + d[2]});
-        //.attr({"xlink:title": d[0] + "[" + d[1] + "]" + " - " + d[4] + " (" + d[5] + "): " + d[2]});
+        //.attr({"xlink:title": d[0] + "[" + d[1] + "]" + " - " + d[4] + " " + d[6] + " [" + d[5] + "]: " + d[2]});
+        .attr({"xlink:title": d[0] + " > " + d[4] + d.loc + ", " + d[5] + ":  " + d[2]});
+    //    }
     })
     .append("rect")
     .attr("width", cellWidth)
