@@ -284,7 +284,6 @@ x = d3.scale.ordinal()
         .attr({"xlink:href": mineUrl + EPORTAL + d[4]})
         //.attr({"xlink:title": d[0] + "[" + d[1] + "]" + " - " + d[4] + " " + d[6] + " [" + d[5] + "]: " + d[2]});
         .attr({"xlink:title": d[0] + " > " + d[4] + d.loc + ", " + d[5] + ":  " + d[2]});
-    //    }
     })
     .append("rect")
     .attr("width", cellWidth)
@@ -342,10 +341,18 @@ x = d3.scale.ordinal()
      .call(d3.svg.axis().scale(y).orient("left"))
      .call(yAxis)
      .selectAll("text")
-      .filter(function(d){ return typeof(d) == "string"; })
-      .style("cursor", "pointer")
-      .on("click", function(d){ document.location.href = mineUrl + GPORTAL + d; })
-      ;
+     .filter(function(d){ return typeof(d) == "string"; })
+     .style("cursor", "pointer")
+    //  .on("mouseover", function(d, i){
+    //    d3.select(this)
+    //       .attr({"xlink:href": mineUrl + GPORTAL + d[0]})
+    //       .attr({"xlink:title": d[1] + "AAA"});
+    //   })
+
+    //.on("mouseover", function(d){ d3.select(this).attr({"xlink:title": "AAAA" })})
+
+    .on("click", function(d){ document.location.href = mineUrl + GPORTAL + d; })
+  ;
 }
 
 // LEGEND
