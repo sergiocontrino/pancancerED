@@ -178,7 +178,7 @@ console.log("s:" + sampleNr + " t:" + tissueNr + " g:" + geneNr + " x:" + xNr + 
   svg.attr("height", margin.top + (barHeight * geneNr) + margin.bottom + 2*barHeight);
   cellWidth=((width - margin.right -margin.left -2*barHeight)/sampleNr);
 
-  // Coerce data to the appropriate types. NOT USED
+  // Coerce data to the appropriate types.
   data.forEach(function(d) {
     //d.sra = +d[4];
     //d.gene = +d[0];
